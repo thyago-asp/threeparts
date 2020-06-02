@@ -112,6 +112,45 @@ class Veiculo
         }
     }
 
+    public function cadastrarEmMassa($lista_veiculos)
+    {
+        $retorno = array();
+        $cod_atual = 0;
+        $con = Conexao::abrirConexao();
+        $con->beginTransaction();
+        try {
+
+            $query = "INSERT INTO veiculos (codigo, nome, anoinicial, anofinal, montadoras_codigo, modelo)
+             VALUES (:codigo, :nome, :anoinicial, :anofinal, :montadoras_codigo, :modelo)";
+
+            $stmt = $con->prepare($query);
+
+            for ($i = 0; $i < count($lista_veiculos); $i++) {
+                $cod_atual = $lista_veiculos[$i]->getCodigo();
+
+                $stmt->bindValue(':codigo', $lista_veiculos[$i]->getCodigo());
+                $stmt->bindValue(':nome', $lista_veiculos[$i]->getNome());
+                $stmt->bindValue(':anoinicial', $lista_veiculos[$i]->getAnoinicial());
+                $stmt->bindValue(':anofinal', $lista_veiculos[$i]->getAnofinal());
+                $stmt->bindValue(':montadoras_codigo', $lista_veiculos[$i]->getCodigo_montadora());
+                $stmt->bindValue(':modelo', $lista_veiculos[$i]->getModelo());
+
+                $stmt->execute();
+
+                
+            }
+            if ($con->commit()) {
+                $retorno[0] = 1;
+                return $retorno;
+            }
+        } catch (PDOException $e) {
+            //    $con->rollBack();
+            $retorno[0] = $e->getCode();
+            $retorno[1] = $cod_atual;
+            return $retorno;
+           
+        }
+    }
     public function listar()
     {
 
@@ -183,7 +222,7 @@ class Veiculo
         $stmt->bindValue(':modelo', $veiculo->getModelo());
 
         $result = $stmt->execute();
-        
+
         return $result;
     }
 }

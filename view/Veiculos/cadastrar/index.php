@@ -12,6 +12,11 @@ if (isset($_REQUEST["r"])) {
         $retorno_cadastro = "sucesso";
     } else if ($_REQUEST["r"] == "0") {
         $retorno_cadastro = "Veiculo_cadastrada";
+    } else if ($_REQUEST["r"] == "3") {
+        $cod_erro = $_REQUEST["cod_erro"];
+        $retorno_cadastro = "erro_cadastro_em_massa";
+    }else if ($_REQUEST["r"] == "2") {
+        $retorno_cadastro = "sucesso_emmassa";
     }
 }
 ?>
@@ -49,13 +54,51 @@ include '../../../estrutura/head.php';
                             Não foi possivel cadastrar. Código da Veiculo já está sendo utilizado.
                         </div>
                     <?php
+                    } else if ($retorno_cadastro == "erro_cadastro_em_massa") {
+                    ?>
+                        <div class="alert alert-danger text-center" role="alert">
+                            Não foi possivel cadastrar os códigos. O código <?php echo $cod_erro ?> já está cadastro.
+                        </div>
+                    <?php
+                    } else if ($retorno_cadastro == "sucesso_emmassa") {
+                    ?>
+                        <div class="alert alert-success text-center" role="alert">
+                            Todos os veiculos do excel foram cadastrados.
+                        </div>
+                    <?php
                     }
 
                     ?>
-       
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <form id="formCadastroMassa" enctype="multipart/form-data" method="post" action="../../../controller/ControllerVeiculos.php?acao=cadEmMassa">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Importar arquivo excel</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="custom-file">
+
+                                            <input type="file" name="imagem" id="imagemPF">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                        <button type="submit" class="btn btn-primary">Salvar</button>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <h4 class="header-title text-center">Cadastro de Veiculos</h4>
                         <p class="text-muted font-14 mb-4 text-center">Realize o cadastro de uma nova Veiculo e de qual ano pertence</p>
+                        <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#exampleModal">
+                            Cadastro em massa
+                        </button>
                         <form id="formVeiculo" method="post" action="../../../controller/ControllerVeiculos.php?acao=cad">
 
                             <div class="form-group">
