@@ -15,7 +15,7 @@ if (isset($_REQUEST["r"])) {
     } else if ($_REQUEST["r"] == "3") {
         $cod_erro = $_REQUEST["cod_erro"];
         $retorno_cadastro = "erro_cadastro_em_massa";
-    }else if ($_REQUEST["r"] == "2") {
+    } else if ($_REQUEST["r"] == "2") {
         $retorno_cadastro = "sucesso_emmassa";
     }
 }
@@ -90,6 +90,7 @@ include '../../../estrutura/head.php';
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                                         <button type="submit" class="btn btn-primary">Salvar</button>
                                     </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -153,7 +154,6 @@ include '../../../estrutura/head.php';
                 </div>
 
             </div>
-
 
             <!-- Footer -->
             <?php include '../../../estrutura/footer.php'; ?>

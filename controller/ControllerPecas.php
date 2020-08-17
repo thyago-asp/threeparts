@@ -187,9 +187,9 @@ class ControllerPecas
 
         $retorno = $p->deletar($codigoPeca);
 
-        echo $retorno;
+       // echo $retorno;
         if ($retorno) {
-            header("Location:/view/Pecas/listar/?r=3");
+            header('Location:../view/Pecas/listar/?r=3');
         }
     }
 

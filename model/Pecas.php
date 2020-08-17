@@ -287,7 +287,6 @@ class Pecas
                         $stmt->bindValue(':data_cadastro', date('d/m/Y \- H:i:s'));
 
                         $retornoInsertPeca = $stmt->execute();
-                        //    echo "<br/><br/><br/>";
                         if ($retornoInsertPeca > 0) {
                             $idPecaPrata = $con->lastInsertId();
                             $queryImagens = "";
